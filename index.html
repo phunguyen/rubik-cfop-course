@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#111827">
+<title>Rubik 3×3 — Từ 2 phút xuống dưới 60 giây</title>
+<style>
+:root{--bg:#f4f6fb;--card:#fff;--ink:#182235;--muted:#657189;--line:#e4e9f2;--accent:#315efb;--accent2:#eaf0ff;--green:#16845b;--shadow:0 8px 28px #1822350d}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{background:linear-gradient(130deg,#111827,#263b76);color:white;padding:38px 20px 30px}
+.wrap{max-width:1100px;margin:auto;padding:0 18px}.eyebrow{text-transform:uppercase;letter-spacing:.13em;font-size:12px;color:#b8c7ff;font-weight:700}
+h1{font-size:clamp(28px,5vw,44px);line-height:1.15;margin:10px 0}header p{max-width:720px;color:#d8e0ff;margin:10px 0 0}
+.stats{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.stat{background:#ffffff17;border:1px solid #ffffff24;border-radius:12px;padding:10px 14px}.stat b{display:block;font-size:20px}
+nav{position:sticky;top:0;z-index:5;background:#ffffffed;backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.navinner{display:flex;gap:8px;overflow:auto;padding:10px 18px;max-width:1100px;margin:auto}.navinner a{white-space:nowrap;text-decoration:none;color:var(--muted);font-size:14px;padding:7px 11px;border-radius:9px}.navinner a:hover{background:var(--accent2);color:var(--accent)}
+main{padding:26px 0 60px}.layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:22px}
+aside{align-self:start;position:sticky;top:68px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow)}
+aside h3{margin:0 0 10px;font-size:15px}aside a{display:block;text-decoration:none;color:var(--muted);padding:6px 0;font-size:14px}aside a:hover{color:var(--accent)}
+.progress{height:9px;background:#edf0f6;border-radius:99px;overflow:hidden;margin:10px 0}.progress span{display:block;height:100%;background:var(--accent);width:0;transition:width .2s}
+.content{min-width:0}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:18px;box-shadow:var(--shadow);scroll-margin-top:76px}
+h2{font-size:23px;margin:0 0 12px}h3{font-size:18px;margin:18px 0 8px}p{margin:8px 0}.muted{color:var(--muted)}.tag{display:inline-block;background:var(--accent2);color:var(--accent);font-size:12px;font-weight:700;padding:3px 8px;border-radius:99px;margin-right:6px}
+.callout{background:#f0f5ff;border-left:4px solid var(--accent);padding:12px 14px;border-radius:8px;margin:14px 0}
+.good{background:#effaf5;border-left-color:var(--green)}.alg{font:700 17px ui-monospace,SFMono-Regular,Consolas,monospace;background:#f3f5fa;border:1px solid var(--line);padding:10px 12px;border-radius:9px;display:inline-block;letter-spacing:.04em;word-break:break-word}
+table{border-collapse:collapse;width:100%;margin:12px 0}td,th{border-bottom:1px solid var(--line);padding:9px;text-align:left;vertical-align:top}th{font-size:13px;color:var(--muted)}
+.lesson{border-top:1px solid var(--line);padding-top:14px;margin-top:14px}.check{display:flex;gap:10px;align-items:flex-start;margin:10px 0}.check input{width:18px;height:18px;margin-top:4px;accent-color:var(--accent)}
+button{border:0;border-radius:10px;background:var(--accent);color:white;padding:10px 14px;font-weight:650;cursor:pointer}button.secondary{background:#edf1fa;color:var(--ink)}button:hover{filter:brightness(.96)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.mini{background:#fafbfe;border:1px solid var(--line);border-radius:12px;padding:14px}
+input[type=search]{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;font:inherit;margin:8px 0 14px}
+footer{text-align:center;color:var(--muted);font-size:13px;padding:24px}
+@media(max-width:800px){.layout{grid-template-columns:1fr}aside{position:static}.grid2{grid-template-columns:1fr}.card{padding:17px}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<div class="eyebrow">Rubik 3×3 · Lộ trình speedcubing</div>
+<h1>Từ 2 phút xuống dưới 60 giây</h1>
+<p>Khóa học thực hành chuyển từ Beginner LBL sang CFOP từng bước. Tập trung vào Cross, F2L, 2-Look OLL/PLL và thói quen quan sát trước.</p>
+<div class="stats">
+ <div class="stat"><b>30 ngày</b><small>Lộ trình gợi ý</small></div>
+ <div class="stat"><b>4 bước</b><small>CFOP</small></div>
+ <div class="stat"><b>Sub-60</b><small>Mục tiêu đầu tiên</small></div>
+</div>
+</div></header>
+<nav><div class="navinner">
+<a href="#start">Bắt đầu</a><a href="#notation">Ký hiệu</a><a href="#cross">Cross</a><a href="#f2l">F2L</a><a href="#oll">2-Look OLL</a><a href="#pll">2-Look PLL</a><a href="#practice">Luyện tập</a><a href="#plan">30 ngày</a>
+</div></nav>
+<main class="wrap"><div class="layout">
+<aside>
+<h3>Tiến độ học</h3><div class="progress"><span id="bar"></span></div><div class="muted" id="progressText">0/12 mục hoàn thành</div>
+<div style="height:12px"></div><h3>Nội dung</h3>
+<a href="#start">01 · Mục tiêu & cách học</a><a href="#notation">02 · Ký hiệu cơ bản</a><a href="#cross">03 · Cross</a><a href="#f2l">04 · F2L</a><a href="#oll">05 · 2-Look OLL</a><a href="#pll">06 · 2-Look PLL</a><a href="#practice">07 · Kỹ thuật luyện</a><a href="#plan">08 · Lộ trình 30 ngày</a>
+<p class="muted" style="font-size:12px;margin-top:16px">Tiến độ được lưu trên trình duyệt của thiết bị này.</p>
+<button class="secondary" onclick="resetProgress()">Đặt lại tiến độ</button>
+</aside>
+<div class="content">
+<section class="card" id="start">
+<span class="tag">Mục tiêu</span><span class="tag">Dành cho người đã giải được LBL</span>
+<h2>01. Bắt đầu đúng cách</h2>
+<p>Bạn đã giải được Rubik 3×3 bằng phương pháp cơ bản với thời gian khoảng 90–120 giây. Mục tiêu trước mắt là xuống dưới 60 giây, không cần học toàn bộ CFOP nâng cao ngay.</p>
+<div class="callout"><b>Chiến lược:</b> Giữ Cross + F2L + 2-Look OLL + 2-Look PLL. Ưu tiên giải ít bước và mượt hơn là học thật nhiều công thức.</div>
+<div class="grid2">
+<div class="mini"><b>Ưu tiên 1 — F2L</b><p class="muted">Ghép góc + cạnh thành từng cặp và đưa vào đúng khe.</p></div>
+<div class="mini"><b>Ưu tiên 2 — Cross</b><p class="muted">Lập kế hoạch dấu cộng ở đáy trước khi xoay.</p></div>
+<div class="mini"><b>Ưu tiên 3 — OLL/PLL</b><p class="muted">Dùng 2-Look để giảm số công thức phải nhớ.</p></div>
+<div class="mini"><b>Ưu tiên 4 — Lookahead</b><p class="muted">Quan sát cặp tiếp theo trong lúc đang xử lý cặp hiện tại.</p></div>
+</div>
+<label class="check"><input type="checkbox" data-task="1"> Tôi hiểu mục tiêu và thứ tự ưu tiên luyện tập.</label>
+</section>
+
+<section class="card" id="notation">
+<h2>02. Ký hiệu xoay Rubik</h2>
+<p>Mỗi chữ là một mặt: <b>R</b> phải, <b>L</b> trái, <b>U</b> trên, <b>D</b> dưới, <b>F</b> trước, <b>B</b> sau.</p>
+<table><tr><th>Ký hiệu</th><th>Cách xoay</th><th>Ví dụ</th></tr>
+<tr><td><b>R</b></td><td>Xoay mặt phải 90° theo chiều kim đồng hồ khi nhìn thẳng vào mặt đó.</td><td class="alg">R</td></tr>
+<tr><td><b>R'</b></td><td>Xoay mặt phải 90° ngược chiều kim đồng hồ.</td><td class="alg">R'</td></tr>
+<tr><td><b>R2</b></td><td>Xoay mặt phải 180°.</td><td class="alg">R2</td></tr>
+<tr><td><b>U, F, L, D, B</b></td><td>Tương tự với các mặt tương ứng.</td><td class="alg">U R U' R'</td></tr></table>
+<div class="callout">Dấu nháy <b>'</b> nghĩa là ngược chiều kim đồng hồ. Không có dấu nháy là cùng chiều kim đồng hồ. Chiều luôn tính khi nhìn trực diện vào mặt đang xoay.</div>
+<label class="check"><input type="checkbox" data-task="2"> Tôi đọc được các ký hiệu cơ bản.</label>
+</section>
+
+<section class="card" id="cross">
+<h2>03. Cross — tạo dấu cộng ở mặt đáy</h2>
+<p>Cross là bốn cạnh tạo dấu cộng quanh tâm đáy, đồng thời màu bên cạnh phải khớp với tâm của bốn mặt bên.</p>
+<h3>Cách luyện</h3>
+<ol><li>Chọn màu đáy cố định, ví dụ trắng.</li><li>Quan sát vị trí bốn cạnh trắng trước khi xoay.</li><li>Lập kế hoạch ghép đủ bốn cạnh trong khoảng 8 bước xoay hoặc ít hơn (mục tiêu luyện tập, không phải luật cứng).</li><li>Tập giải Cross ở đáy thay vì mặt trên để giảm thao tác lật.</li></ol>
+<div class="callout good"><b>Bài tập:</b> Xáo trộn cube, nhìn 15 giây để lên kế hoạch Cross, sau đó thực hiện. Lặp 10 lần. Khi quen, giảm thời gian quan sát.</div>
+<p><b>Lỗi thường gặp:</b> chỉ khớp mặt đáy mà quên màu cạnh bên; xoay quá nhiều; vừa xoay vừa tìm viên tiếp theo.</p>
+<label class="check"><input type="checkbox" data-task="3"> Tôi giải được Cross ở đáy mà không phải sửa lại nhiều.</label>
+<label class="check"><input type="checkbox" data-task="4"> Tôi có thể lên kế hoạch Cross trước khi bắt đầu.</label>
+</section>
+
+<section class="card" id="f2l">
+<h2>04. F2L — ghép góc và cạnh thành cặp</h2>
+<p>F2L thay cho bước giải tầng 1 rồi tầng 2 riêng biệt. Mỗi khe được giải bằng một cặp gồm <b>1 viên góc tầng 1</b> và <b>1 viên cạnh tầng 2</b>.</p>
+<div class="callout"><b>Quy trình tư duy:</b> tìm góc → tìm cạnh cùng cặp → ghép hai viên ở tầng trên → đưa cặp vào khe đúng.</div>
+<h3>Ba tình huống nền tảng</h3>
+<div class="lesson"><b>Trường hợp A — Hai viên đã ghép thành cặp ở tầng trên</b><p>Đưa khe cần lắp ra phía trước-phải hoặc trước-trái, căn cặp phía trên rồi chèn vào khe bằng thao tác phù hợp. Hãy ưu tiên hiểu chuyển động thay vì học thuộc một chuỗi duy nhất.</p></div>
+<div class="lesson"><b>Trường hợp B — Góc và cạnh tách rời</b><p>Dùng U-turn để đưa chúng về cùng vùng, sau đó xoay mặt trước/phải để ghép. Nếu cặp bị đảo hướng, tách ra và ghép lại theo hướng đúng.</p></div>
+<div class="lesson"><b>Trường hợp C — Góc hoặc cạnh đang nằm sai trong khe</b><p>Dùng một thao tác đưa viên sai lên tầng trên, ghép cặp lại rồi chèn đúng. Tránh phá các cặp đã hoàn thành nếu không cần thiết.</p></div>
+<h3>Thứ tự học F2L</h3>
+<ol><li>Học ghép cặp chậm, không bấm giờ.</li><li>Giải từng cặp bằng ít thao tác và hạn chế xoay cả khối.</li><li>Khi tay đang chèn cặp hiện tại, mắt tìm góc/cạnh của cặp kế tiếp.</li><li>Tập giải đủ 4 cặp với nhịp xoay đều, không cần thật nhanh.</li></ol>
+<div class="callout good">Đừng cố học hàng chục công thức F2L ngay. Có rất nhiều trường hợp; hiểu cách ghép cặp sẽ giúp bạn tự xử lý và nhớ lâu hơn.</div>
+<label class="check"><input type="checkbox" data-task="5"> Tôi hiểu mục tiêu của F2L và phân biệt được góc/cạnh của một cặp.</label>
+<label class="check"><input type="checkbox" data-task="6"> Tôi giải được 4 cặp F2L mà không cần xem hướng dẫn.</label>
+<label class="check"><input type="checkbox" data-task="7"> Tôi bắt đầu quan sát cặp tiếp theo trong khi giải cặp hiện tại.</label>
+</section>
+
+<section class="card" id="oll">
+<h2>05. 2-Look OLL — định hướng mặt vàng</h2>
+<p>OLL đầy đủ có 57 trường hợp. 2-Look OLL chia thành hai lượt: tạo dấu cộng vàng, sau đó đưa toàn bộ mặt vàng lên trên. Đây là lựa chọn phù hợp khi mới chuyển sang CFOP.</p>
+<h3>Lượt 1 — tạo dấu cộng vàng</h3>
+<p>Thuật toán thường dùng:</p><div class="alg">F R U R' U' F'</div>
+<p class="muted">Tùy trạng thái, có thể cần đặt mặt vàng đúng hướng trước khi thực hiện. Nhận diện dạng chấm, chữ L hoặc đường thẳng rồi áp dụng công thức.</p>
+<h3>Lượt 2 — hoàn thành mặt vàng</h3>
+<p>Học các trường hợp định hướng góc vàng cơ bản. Một công thức thường gặp trong nhóm 2-Look OLL:</p>
+<div class="alg">R U R' U R U2 R'</div>
+<p class="muted">Đây là một trường hợp cụ thể, không phải công thức dùng cho mọi trạng thái. Hãy học theo hình nhận diện của từng trường hợp và dùng tài liệu minh họa khi luyện.</p>
+<div class="callout">Mẹo ghi nhớ: học 1–2 trường hợp mỗi buổi; nhìn trạng thái, gọi tên trường hợp, đọc công thức thành nhịp rồi mới tăng tốc.</div>
+<label class="check"><input type="checkbox" data-task="8"> Tôi tạo được dấu cộng vàng ổn định.</label>
+<label class="check"><input type="checkbox" data-task="9"> Tôi hoàn thành mặt vàng bằng phương pháp 2-Look OLL.</label>
+</section>
+
+<section class="card" id="pll">
+<h2>06. 2-Look PLL — hoán vị tầng cuối</h2>
+<p>PLL đưa các viên tầng cuối về đúng vị trí sau khi mặt vàng đã hoàn thành. 2-Look PLL chia thành hoán vị cạnh rồi hoán vị góc (hoặc nhận diện theo nhóm tương ứng).</p>
+<h3>Nhóm cạnh — ví dụ Ua-perm</h3>
+<div class="alg">R U' R U R U R U' R' U' R2</div>
+<p class="muted">Dùng cho một dạng chu kỳ cạnh cụ thể. Cần nhận diện hướng chu kỳ trước khi áp dụng.</p>
+<h3>Nhóm góc — ví dụ T-perm</h3>
+<div class="alg">R U R' U' R' F R2 U' R' U' R U R' F'</div>
+<p class="muted">T-perm đổi chỗ một cặp góc và một cặp cạnh theo mẫu đặc trưng; đây là ví dụ để làm quen, không phải lời giải cho mọi trường hợp PLL.</p>
+<div class="callout">Đừng học công thức chỉ bằng cách đọc. Hãy xem cube ở đúng trạng thái, thực hiện chậm, rồi lặp lại nhiều lần để hình thành trí nhớ cơ bắp.</div>
+<label class="check"><input type="checkbox" data-task="10"> Tôi nhận diện được khi nào cần hoán vị cạnh/góc.</label>
+</section>
+
+<section class="card" id="practice">
+<h2>07. Kỹ thuật luyện để tăng tốc</h2>
+<div class="grid2">
+<div class="mini"><b>Finger tricks</b><p>Học dùng ngón trỏ/gẩy U, ngón áp út cho U' khi phù hợp. Giữ cổ tay và khối Rubik ổn định.</p></div>
+<div class="mini"><b>Lookahead</b><p>Không dừng hẳn để tìm cặp tiếp theo. Xoay chậm hơn một chút nhưng liên tục.</p></div>
+<div class="mini"><b>Giảm pause</b><p>Ghi nhận đoạn nào bạn dừng lâu: Cross, tìm F2L, OLL hay PLL. Chỉ tập trung sửa một điểm mỗi buổi.</p></div>
+<div class="mini"><b>Ao5</b><p>Đo trung bình 5 lần giải để theo dõi tiến bộ; đừng đánh giá qua một lần giải may mắn.</p></div>
+</div>
+<h3>Buổi tập 20 phút gợi ý</h3>
+<table><tr><th>Thời lượng</th><th>Nội dung</th></tr><tr><td>5 phút</td><td>Cross và lên kế hoạch trước khi xoay</td></tr><tr><td>8 phút</td><td>F2L chậm, tập ghép cặp và lookahead</td></tr><tr><td>4 phút</td><td>Ôn OLL/PLL đang học</td></tr><tr><td>3 phút</td><td>Giải timed, ghi lại Ao5</td></tr></table>
+<label class="check"><input type="checkbox" data-task="11"> Tôi đã có buổi luyện 20 phút theo cấu trúc trên.</label>
+</section>
+
+<section class="card" id="plan">
+<h2>08. Lộ trình 30 ngày</h2>
+<table><tr><th>Giai đoạn</th><th>Trọng tâm</th><th>Kết quả cần đạt</th></tr>
+<tr><td>Ngày 1–7</td><td>Cross + làm quen F2L</td><td>Cross ở đáy; hiểu cách ghép cặp</td></tr>
+<tr><td>Ngày 8–14</td><td>F2L cơ bản</td><td>Giải đủ 4 cặp không cần xem hướng dẫn</td></tr>
+<tr><td>Ngày 15–21</td><td>2-Look OLL + PLL</td><td>Nhận diện và áp dụng nhóm công thức cơ bản</td></tr>
+<tr><td>Ngày 22–30</td><td>Lookahead + luyện timed</td><td>Giảm pause, theo dõi Ao5 và tiến tới sub-60</td></tr></table>
+<div class="callout good"><b>Tiêu chí tiến bộ:</b> ưu tiên giải ổn định, ít dừng và ít xoay cả khối. Sub-60 là mục tiêu luyện tập, thời gian đạt được tùy tần suất và chất lượng luyện.</div>
+<label class="check"><input type="checkbox" data-task="12"> Tôi đã hoàn thành một chu kỳ luyện 30 ngày hoặc tự đánh giá lại tiến độ.</label>
+</section>
+<section class="card">
+<h2>Tự kiểm tra nhanh</h2>
+<p>Trước mỗi lần bấm giờ, tự hỏi:</p>
+<ul><li>Cross đã được lên kế hoạch chưa?</li><li>Sau Cross, mình có tìm được cặp F2L đầu tiên ngay không?</li><li>Mình có đang xoay liên tục hay dừng để tìm viên?</li><li>Mình có nhận diện OLL/PLL trước khi thực hiện công thức không?</li></ul>
+<button onclick="window.print()">In / lưu thành PDF</button>
+</section>
+</div></div></main>
+<footer>Rubik 3×3 · Tài liệu học cá nhân · Có thể mở trên điện thoại và máy tính</footer>
+<script>
+const boxes=[...document.querySelectorAll('[data-task]')];
+function load(){let saved={};try{saved=JSON.parse(localStorage.getItem('rubikProgress')||'{}')}catch(e){}boxes.forEach(b=>b.checked=!!saved[b.dataset.task]);update()}
+function update(){const n=boxes.filter(b=>b.checked).length;document.getElementById('bar').style.width=(n/boxes.length*100)+'%';document.getElementById('progressText').textContent=n+'/'+boxes.length+' mục hoàn thành';let s={};boxes.forEach(b=>s[b.dataset.task]=b.checked);localStorage.setItem('rubikProgress',JSON.stringify(s))}
+boxes.forEach(b=>b.addEventListener('change',update));
+function resetProgress(){if(confirm('Bạn muốn đặt lại toàn bộ tiến độ?')){boxes.forEach(b=>b.checked=false);update()}}
+load();
+</script>
+</body></html>
