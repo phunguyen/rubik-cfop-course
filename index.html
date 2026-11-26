@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lộ trình xếp Rubik CFOP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#fbfbfc; --ink:#1d2433; --muted:#5b6472; --rule:#dfe3ea; --soft:#eef1f6;
+  --accent:#1f5fbf; --alg-bg:#e8eefa;
+  --sticker-line:#2c2c2a; --grey:#b9b7ae; --hole:#5f5e5a;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#14181f; --ink:#e7eaf0; --muted:#9aa3b2; --rule:#2a313d; --soft:#1c222b;
+    --accent:#7fa8ec; --alg-bg:#1f2a3d; --sticker-line:#0b0d10; --grey:#8d8b84; --hole:#3a3a37;
+    color-scheme: dark;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:calc(64px + env(safe-area-inset-top,0px))}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  font-size:17px; line-height:1.6;
+  padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px);
+}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+nav{
+  position:sticky; top:env(safe-area-inset-top,0px); z-index:5;
+  background:var(--paper); border-bottom:1px solid var(--rule);
+}
+nav ul{list-style:none;margin:0 auto;padding:10px 16px;display:flex;gap:8px;overflow-x:auto;max-width:760px;scrollbar-width:none}
+nav a{display:block;white-space:nowrap;padding:6px 12px;border-radius:999px;background:var(--soft);color:var(--ink);text-decoration:none;font-size:14px;font-weight:500}
+nav a:focus-visible,a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+main{max-width:760px;margin:0 auto;padding:24px 20px 64px}
+header h1{font-size:clamp(30px,7vw,44px);line-height:1.15;margin:16px 0 12px;letter-spacing:-0.02em}
+header p{color:var(--muted);margin:0 0 8px;max-width:62ch}
+.stages{display:flex;gap:6px;margin:24px 0 8px;flex-wrap:wrap}
+.stages span{font-family:"JetBrains Mono",ui-monospace,monospace;font-weight:700;font-size:15px;padding:8px 14px;border-radius:8px;color:#fff}
+.stages .c{background:#2e9e4f}.stages .f{background:#d33a3a}.stages .o{background:#e0b400;color:#1d2433}.stages .p{background:#1f5fbf}
+section{margin-top:56px}
+h2{font-size:26px;line-height:1.25;margin:0 0 12px;letter-spacing:-0.01em}
+h3{font-size:18px;margin:28px 0 8px}
+p,li{max-width:68ch}
+ol,ul.plain{padding-left:22px}
+li{margin:4px 0}
+code,.alg{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:0.92em}
+code{background:var(--alg-bg);padding:1px 6px;border-radius:5px;white-space:nowrap}
+.table-wrap{overflow-x:auto;margin:12px 0;border:1px solid var(--rule);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{background:var(--soft);font-weight:700}
+tr:last-child td{border-bottom:none}
+td code{white-space:normal;word-break:keep-all}
+.cases{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:16px 0}
+@media (min-width:700px){.cases{grid-template-columns:repeat(4,1fr)}}
+.case{border:1px solid var(--rule);border-radius:12px;padding:12px 8px;text-align:center;background:var(--paper)}
+.case svg{width:100%;max-width:140px;height:auto;display:block;margin:0 auto}
+.case .alg{display:block;font-weight:700;margin-top:8px;font-size:14px;line-height:1.4}
+.case .nm{display:block;color:var(--muted);font-size:13px;line-height:1.4;margin-top:4px}
+.legend{color:var(--muted);font-size:14px;display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center}
+.sw{display:inline-block;width:12px;height:12px;border:1px solid var(--sticker-line);vertical-align:-1px;margin-right:4px}
+.tip{border-left:3px solid var(--accent);padding:4px 0 4px 14px;margin:16px 0;color:var(--ink)}
+.checklist{list-style:none;padding:0}
+.checklist li{display:flex;gap:10px;align-items:flex-start}
+.checklist input{margin-top:6px;width:18px;height:18px;accent-color:var(--accent)}
+footer{margin-top:64px;color:var(--muted);font-size:14px;border-top:1px solid var(--rule);padding-top:16px}
+a{color:var(--accent)}
+</style>
+</head>
+<body>
+<nav aria-label="Mục lục">
+  <ul>
+    <li><a href="#ky-hieu">Ký hiệu</a></li>
+    <li><a href="#lo-trinh">Lộ trình</a></li>
+    <li><a href="#cross">Cross</a></li>
+    <li><a href="#f2l">F2L</a></li>
+    <li><a href="#f2l-dac-biet">F2L đặc biệt</a></li>
+    <li><a href="#oll">OLL</a></li>
+    <li><a href="#pll">PLL</a></li>
+    <li><a href="#luyen-tap">Luyện tập</a></li>
+  </ul>
+</nav>
+<main>
+<header>
+  <h1>Lộ trình xếp Rubik CFOP, từ beginner lên nâng cao</h1>
+  <p>Dành cho người đã xếp được 6 mặt theo cách beginner (khoảng 2 phút) và muốn xuống dưới 1 phút, rồi dưới 30 giây.</p>
+  <div class="stages" aria-label="Bốn bước của CFOP"><span class="c">Cross</span><span class="f">F2L</span><span class="o">OLL</span><span class="p">PLL</span></div>
+</header>
+
+<section id="ky-hieu">
+  <h2>Ký hiệu và quy ước</h2>
+  <p>Luôn cầm khối với <strong>mặt trắng ở dưới, mặt vàng ở trên, mặt xanh lá hướng về phía bạn, mặt đỏ bên phải</strong>.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Ký hiệu</th><th>Mặt</th><th>Cách xoay</th></tr></thead>
+    <tbody>
+      <tr><td><code>R</code></td><td>Phải</td><td>Theo chiều kim đồng hồ khi nhìn từ bên phải (đẩy lên)</td></tr>
+      <tr><td><code>L</code></td><td>Trái</td><td>Theo chiều kim đồng hồ khi nhìn từ bên trái (kéo xuống)</td></tr>
+      <tr><td><code>U</code></td><td>Trên</td><td>Theo chiều kim đồng hồ khi nhìn từ trên xuống (đẩy sang trái)</td></tr>
+      <tr><td><code>D</code></td><td>Dưới</td><td>Theo chiều kim đồng hồ khi nhìn từ dưới lên</td></tr>
+      <tr><td><code>F</code></td><td>Trước</td><td>Theo chiều kim đồng hồ khi nhìn thẳng vào mặt trước</td></tr>
+      <tr><td><code>B</code></td><td>Sau</td><td>Theo chiều kim đồng hồ khi nhìn từ phía sau</td></tr>
+      <tr><td><code>R'</code></td><td></td><td>Dấu phẩy: xoay ngược chiều, ví dụ R' là kéo mặt phải xuống</td></tr>
+      <tr><td><code>R2</code></td><td></td><td>Xoay 2 lần (180°)</td></tr>
+      <tr><td><code>r</code></td><td></td><td>Chữ thường: xoay 2 lớp bên phải cùng lúc</td></tr>
+      <tr><td><code>M</code></td><td></td><td>Lớp giữa dọc, xoay cùng chiều với L</td></tr>
+    </tbody>
+  </table></div>
+  <p>Ví dụ: <code>R U R' U'</code> đọc là “phải lên, trên sang trái, phải xuống, trên sang phải”. Đây là cụm nước hay gặp nhất, nên tập cho thật nhanh.</p>
+</section>
+
+<section id="lo-trinh">
+  <h2>Lộ trình tổng quan</h2>
+  <p>Học theo thứ tự dưới đây có thể đưa bạn xuống 30–40 giây sau khoảng 2–3 tháng, nếu tập đều 20–30 phút mỗi ngày.</p>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Giai đoạn</th><th>Học gì</th><th>Số công thức</th><th>Mục tiêu</th></tr></thead>
+    <tbody>
+      <tr><td>1. Ngay bây giờ</td><td>Làm cross ở mặt đáy</td><td>0</td><td>Không đổi</td></tr>
+      <tr><td>2. Tuần 1–2</td><td>F2L trực giác (4 trường hợp cơ bản)</td><td>4</td><td>1 phút 30</td></tr>
+      <tr><td>3. Tuần 2–3</td><td>2-look OLL và 2-look PLL</td><td>16</td><td>Dưới 1 phút</td></tr>
+      <tr><td>4. Tháng 2</td><td>F2L đặc biệt, tập lookahead</td><td>3–5</td><td>40–50 giây</td></tr>
+      <tr><td>5. Tháng 3 trở đi</td><td>Full PLL (21), rồi full OLL (57)</td><td>78</td><td>Dưới 30 giây</td></tr>
+    </tbody>
+  </table></div>
+  <p class="tip">Ưu tiên F2L hơn việc học thêm công thức. F2L chiếm gần một nửa thời gian giải, nên cải thiện ở đây có hiệu quả lớn nhất.</p>
+</section>
+
+<section id="cross">
+  <h2>Bước 1: Cross ở mặt đáy</h2>
+  <p>Xếp dấu cộng trắng ở <strong>mặt dưới</strong>, không xếp ở mặt trên rồi lật như cách beginner. F2L cần cross nằm dưới để bạn nhìn thấy các mảnh ở tầng trên.</p>
+  <ol>
+    <li>Quan sát mặt trắng, tìm 4 cạnh trắng (trắng–xanh lá, trắng–đỏ, trắng–xanh dương, trắng–cam).</li>
+    <li>Đưa từng cạnh xuống đáy sao cho màu còn lại trùng với tâm mặt bên. Không cần đưa lên mặt trên trước.</li>
+    <li>Nếu cạnh đã ở đáy nhưng sai vị trí: đưa lên bằng một nước (ví dụ <code>F2</code>), xoay U cho trùng màu, rồi đưa xuống lại.</li>
+    <li>Nếu cạnh nằm đúng chỗ nhưng bị lật màu: dùng <code>F2 U' R' F R</code> (với cạnh ở mặt trước).</li>
+  </ol>
+  <p>Mất khoảng 3–5 ngày để quen. Các kỹ năng sâu hơn (cross trong tối đa 8 bước, nhìn trước toàn bộ cross trong 15 giây quan sát) để đến khi bạn xuống khoảng 40 giây.</p>
+</section>
+
+<section id="f2l">
+  <h2>Bước 2: F2L trực giác, 4 trường hợp cơ bản</h2>
+  <p>F2L ghép 1 góc tầng 1 với 1 cạnh tầng 2 thành một cặp, rồi đưa cả cặp vào khe trước-phải cùng lúc. Mọi trường hợp đều được đưa về một trong 4 dạng dưới đây.</p>
+  <div class="cases" data-set="basic"></div>
+  <p class="legend"><span><span class="sw" style="background:#2e9e4f"></span>Mặt trước</span><span><span class="sw" style="background:#d33a3a"></span>Mặt phải</span><span><span class="sw" style="background:var(--hole)"></span>Khe còn trống</span><span>Mặt vàng ở trên (ô xám là mảnh không liên quan)</span></p>
+  <h3>Cách làm mỗi cặp</h3>
+  <ol>
+    <li>Tìm 1 góc có màu trắng và cạnh cùng màu với nó (ví dụ góc trắng–xanh lá–đỏ và cạnh xanh lá–đỏ).</li>
+    <li>Xoay U để đặt góc ngay phía trên khe của nó.</li>
+    <li>So với 4 hình trên: nếu khớp, làm công thức tương ứng.</li>
+    <li>Nếu không khớp, dùng vài nước để đưa về dạng khớp (xem phần trường hợp đặc biệt).</li>
+  </ol>
+  <p class="tip">Hiểu công thức thay vì học thuộc: với <code>R U R'</code>, nước R nâng khe lên, U đưa góc về ghép với cạnh, R' hạ cả cặp xuống khe. Với khe trái-trước, làm đối xứng bằng L thay cho R.</p>
+</section>
+
+<section id="f2l-dac-biet">
+  <h2>F2L: các trường hợp đặc biệt</h2>
+  <p>Mọi trường hợp khó đều đi theo cùng một hướng: <strong>đưa mảnh lên tầng trên, đưa về dạng cơ bản, rồi đưa vào khe</strong>.</p>
+  <div class="cases" data-set="special"></div>
+  <ul class="plain">
+    <li><strong>A và B (trắng hướng lên):</strong> đoạn <code>R U2 R'</code> (hoặc <code>F' U2 F</code>) lật góc cho mặt trắng quay ra bên cạnh. Phần còn lại là một trong 4 trường hợp cơ bản.</li>
+    <li><strong>C (góc đã trong khe, cạnh ở trên):</strong> <code>U R U' R'</code> nhấc góc ra và ghép với cạnh, sau đó <code>U' F' U F</code> là trường hợp cơ bản số 4. Nếu cạnh nằm chỗ khác, xoay U trước để đưa cạnh về đúng vị trí trong hình.</li>
+    <li><strong>D (góc đúng, cạnh bị lật):</strong> công thức dài, tập chậm theo nhóm <code>R2 U2 F</code>, <code>R2 F'</code>, <code>U2 R' U R'</code>. Chưa nhớ thì giải tạm: <code>R U R'</code> để đưa cả hai mảnh lên, rồi xử lý như trường hợp thường.</li>
+    <li><strong>Cạnh kẹt trong khe khác:</strong> đưa cạnh lên bằng 3 nước của khe đó (ví dụ khe sau-phải dùng <code>R' U R</code>), rồi làm tiếp.</li>
+  </ul>
+</section>
+
+<section id="oll">
+  <h2>Bước 3: 2-look OLL, làm vàng mặt trên</h2>
+  <p>10 công thức, chia làm 2 lần nhìn: làm dấu cộng vàng trước, rồi làm vàng các góc. Nếu chưa thấy đúng hình, xoay <code>U</code> đến khi khớp.</p>
+  <h3>Lần nhìn 1: dấu cộng vàng (chỉ xét 4 cạnh)</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Hình trên mặt vàng</th><th>Cách cầm</th><th>Công thức</th></tr></thead>
+    <tbody>
+      <tr><td>Đường thẳng</td><td>Đường nằm ngang</td><td><code>F R U R' U' F'</code></td></tr>
+      <tr><td>Chữ L</td><td>Chữ L ở góc trái-sau</td><td><code>F U R U' R' F'</code></td></tr>
+      <tr><td>Chỉ có chấm giữa</td><td>Bất kỳ</td><td>Làm công thức đường thẳng một lần, rồi xử lý hình mới</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Lần nhìn 2: làm vàng các góc</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Tên</th><th>Nhận dạng</th><th>Công thức</th></tr></thead>
+    <tbody>
+      <tr><td>Sune</td><td>1 góc vàng ở trái-trước, vàng của góc phải-trước hướng ra trước</td><td><code>R U R' U R U2 R'</code></td></tr>
+      <tr><td>Antisune</td><td>1 góc vàng ở phải-sau, vàng của góc phải-trước hướng sang phải</td><td><code>R U2 R' U' R U' R'</code></td></tr>
+      <tr><td>H</td><td>Không góc vàng, 2 cặp vàng ở bên trái và bên phải</td><td><code>R U R' U R U' R' U R U2 R'</code></td></tr>
+      <tr><td>Pi</td><td>Không góc vàng, 1 cặp vàng ở bên trái</td><td><code>R U2 R2 U' R2 U' R2 U2 R</code></td></tr>
+      <tr><td>Headlights</td><td>2 góc vàng phía sau, cặp vàng ở mặt trước</td><td><code>R2 D R' U2 R D' R' U2 R'</code></td></tr>
+      <tr><td>T</td><td>2 góc vàng bên phải, vàng của 2 góc bên trái hướng ra trước và ra sau</td><td><code>r U R' U' r' F R F'</code></td></tr>
+      <tr><td>Bowtie</td><td>Góc vàng ở trái-trước và phải-sau, vàng của góc phải-trước hướng ra trước</td><td><code>F' r U R' U' r' F R</code></td></tr>
+    </tbody>
+  </table></div>
+  <p>Sune và Antisune xuất hiện nhiều nhất, nên học trước.</p>
+</section>
+
+<section id="pll">
+  <h2>Bước 4: 2-look PLL, hoàn tất tầng trên</h2>
+  <p>6 công thức: đổi góc trước, đổi cạnh sau. “Đèn pha” là khi 2 góc trên cùng một mặt bên có cùng màu.</p>
+  <h3>Lần nhìn 1: đổi góc</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Nhận dạng</th><th>Cách cầm</th><th>Công thức</th></tr></thead>
+    <tbody>
+      <tr><td>Có đèn pha ở đúng 1 mặt</td><td>Đèn pha bên trái</td><td>T-perm: <code>R U R' U' R' F R2 U' R' U' R U R' F'</code></td></tr>
+      <tr><td>Không có đèn pha nào</td><td>Bất kỳ</td><td>Y-perm: <code>F R U' R' U' R U R' F' R U R' U' R' F R F'</code></td></tr>
+      <tr><td>Cả 4 mặt đều có đèn pha</td><td></td><td>Góc đã xong, sang lần nhìn 2</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Lần nhìn 2: đổi cạnh (xoay U cho các góc khớp màu tâm)</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Nhận dạng</th><th>Cách cầm</th><th>Công thức</th></tr></thead>
+    <tbody>
+      <tr><td>1 mặt đã xong, cạnh mặt trước cần sang phải</td><td>Mặt đã xong ở phía sau</td><td>Ua: <code>R U' R U R U R U' R' U' R2</code></td></tr>
+      <tr><td>1 mặt đã xong, cạnh mặt trước cần sang trái</td><td>Mặt đã xong ở phía sau</td><td>Ub: <code>R2 U R U R' U' R' U' R' U R'</code></td></tr>
+      <tr><td>Không mặt nào xong, cạnh đổi với mặt đối diện</td><td>Bất kỳ</td><td>H: <code>M2 U M2 U2 M2 U M2</code></td></tr>
+      <tr><td>Không mặt nào xong, cạnh đổi với mặt kế bên</td><td>Cạnh trước đổi với cạnh phải</td><td>Z: <code>M2 U M2 U M' U2 M2 U2 M' U2</code></td></tr>
+    </tbody>
+  </table></div>
+  <p>Sau công thức cuối, xoay U cho tầng trên khớp với các mặt bên là xong. Nếu chỉ học trước 2 công thức, hãy chọn T-perm và Ua.</p>
+</section>
+
+<section id="luyen-tap">
+  <h2>Luyện tập và công cụ</h2>
+  <p>Tập đều 20–30 phút mỗi ngày hiệu quả hơn tập dồn 2 tiếng vào cuối tuần.</p>
+  <ul class="checklist">
+    <li><input type="checkbox" id="t1"><label for="t1">Dùng khối speedcube có nam châm (khoảng 150–300 nghìn đồng là đủ tốt)</label></li>
+    <li><input type="checkbox" id="t2"><label for="t2">Bấm giờ mỗi lần giải bằng <a href="https://cstimer.net">csTimer.net</a> và theo dõi trung bình 5 lần (ao5)</label></li>
+    <li><input type="checkbox" id="t3"><label for="t3">Xoay bằng ngón tay, không cầm cả khối xoay; hạn chế lật khối giữa các bước</label></li>
+    <li><input type="checkbox" id="t4"><label for="t4">Mỗi tuần chỉ thêm 2–3 công thức mới</label></li>
+    <li><input type="checkbox" id="t5"><label for="t5">Tập F2L chậm: xoay đều tay, vừa đưa cặp vào khe vừa tìm cặp tiếp theo (lookahead)</label></li>
+  </ul>
+  <p>Tài liệu tham khảo: kênh YouTube của J Perm và trang <a href="https://jperm.net">jperm.net</a> có đủ bảng công thức kèm hình cho OLL, PLL và F2L.</p>
+</section>
+
+<footer>Tất cả công thức trong trang đã được kiểm tra bằng phần mềm mô phỏng khối rubik.</footer>
+</main>
+
+<script>
+(function(){
+  var COLORS = {w:'#ffffff', g:'#2e9e4f', r:'#d33a3a'};
+  var hx = 17.32, hy = 10, s = 20;
+  function color(code){ return code === 'x' ? 'var(--grey)' : code === 'h' ? 'var(--hole)' : COLORS[code]; }
+  function quad(ox, oy, ax, ay, bx, by, code){
+    var p = [[ox,oy],[ox+ax,oy+ay],[ox+ax+bx,oy+ay+by],[ox+bx,oy+by]].map(function(q){return q[0].toFixed(2)+','+q[1].toFixed(2);}).join(' ');
+    return '<polygon points="'+p+'" style="fill:'+color(code)+';stroke:var(--sticker-line)" stroke-width="0.9"/>';
+  }
+  // spec: u/f/r = {"row,col": colourCode}; holes = keys on F/R that are empty slot cells
+  function cubeSVG(spec, title){
+    var cx = 60, y0 = 6, out = '';
+    var fx = cx - 3*hx, fy = y0 + 3*hy, ry = y0 + 6*hy;
+    for (var i=0;i<3;i++) for (var j=0;j<3;j++){
+      out += quad(cx + j*hx - i*hx, y0 + j*hy + i*hy, hx, hy, -hx, hy, spec.u[i+','+j] || 'x');
+    }
+    for (var d=0; d<3; d++) for (var k=0; k<3; k++){
+      var key = d+','+k;
+      var fc = spec.f[key] || (spec.fh.indexOf(key) > -1 ? 'h' : (k===1 && d>0 ? 'g' : 'x'));
+      out += quad(fx + k*hx, fy + k*hy + d*s, hx, hy, 0, s, fc);
+      var rc = spec.r[key] || (spec.rh.indexOf(key) > -1 ? 'h' : (k===1 && d>0 ? 'r' : 'x'));
+      out += quad(cx + k*hx, ry - k*hy + d*s, hx, -hy, 0, s, rc);
+    }
+    return '<svg viewBox="0 0 120 128" role="img" aria-label="'+title+'">'+out+'</svg>';
+  }
+  var FULL_F = ['1,2','2,2'], FULL_R = ['1,0','2,0'];
+  var SETS = {
+    basic: [
+      {alg:"R U R'", nm:'1. Tách rời, trắng hướng sang phải', u:{'2,2':'r','0,1':'g'}, f:{'0,2':'g'}, r:{'0,0':'w'}, fh:FULL_F, rh:FULL_R},
+      {alg:"F' U' F", nm:'2. Tách rời, trắng hướng ra trước', u:{'2,2':'g','1,0':'r'}, f:{'0,2':'w'}, r:{'0,0':'r'}, fh:FULL_F, rh:FULL_R},
+      {alg:"U R U' R'", nm:'3. Đã thành cặp, nằm bên phải', u:{'2,2':'g','1,2':'g'}, f:{'0,2':'w'}, r:{'0,0':'r','0,1':'r'}, fh:FULL_F, rh:FULL_R},
+      {alg:"U' F' U F", nm:'4. Đã thành cặp, nằm phía trước', u:{'2,2':'r','2,1':'r'}, f:{'0,2':'g','0,1':'g'}, r:{'0,0':'w'}, fh:FULL_F, rh:FULL_R}
+    ],
+    special: [
+      {alg:"R U2 R' U' R U R'", nm:'A. Trắng hướng lên, cạnh bên phải', u:{'2,2':'w','1,2':'g'}, f:{'0,2':'r'}, r:{'0,0':'g','0,1':'r'}, fh:FULL_F, rh:FULL_R},
+      {alg:"F' U2 F U F' U' F", nm:'B. Trắng hướng lên, cạnh phía trước', u:{'2,2':'w','2,1':'r'}, f:{'0,2':'r','0,1':'g'}, r:{'0,0':'g'}, fh:FULL_F, rh:FULL_R},
+      {alg:"U R U' R' U' F' U F", nm:'C. Góc đã trong khe, cạnh ở tầng trên', u:{'2,1':'r'}, f:{'0,1':'g','2,2':'g'}, r:{'2,0':'r'}, fh:['1,2'], rh:['1,0']},
+      {alg:"R2 U2 F R2 F' U2 R' U R'", nm:'D. Góc đúng, cạnh bị lật trong khe', u:{}, f:{'1,2':'r','2,2':'g'}, r:{'1,0':'g','2,0':'r'}, fh:[], rh:[]}
+    ]
+  };
+  document.querySelectorAll('.cases').forEach(function(el){
+    el.innerHTML = SETS[el.dataset.set].map(function(c){
+      return '<figure class="case" style="margin:0">'+cubeSVG(c, c.nm)+'<figcaption><span class="alg">'+c.alg+'</span><span class="nm">'+c.nm+'</span></figcaption></figure>';
+    }).join('');
+  });
+  // remember ticked practice items on this device
+  document.querySelectorAll('.checklist input').forEach(function(box){
+    try { box.checked = localStorage.getItem('cfop-'+box.id) === '1'; } catch(e){}
+    box.addEventListener('change', function(){ try { localStorage.setItem('cfop-'+box.id, box.checked ? '1' : '0'); } catch(e){} });
+  });
+})();
+</script>
+</body>
+</html>
